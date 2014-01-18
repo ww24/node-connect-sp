@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Connect to Smartphone</title>
+</head>
+<body>
+  top page
+  <div id="qrcode"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/connect.js"></script>
+  <script src="/js/qrcode.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script>
+    $(function () {
+      var $qrcode = $("#qrcode");
+      var qr = qrcode(10, "H");
+      qr.addData(location.href);
+      qr.make();
+      $qrcode.html(qr.createImgTag());
+    });
+  </script>
+</body>
+</html>

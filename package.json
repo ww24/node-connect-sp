@@ -1,0 +1,27 @@
+{
+  "name": "node-connect-sp",
+  "version": "0.0.1",
+  "description": "connect to smartphone",
+  "main": "app.js",
+  "dependencies": {
+    "express.io": "~1.1.13",
+    "hogan-express": "~0.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ww24/node-connect-sp.git"
+  },
+  "keywords": [
+    "smartphone"
+  ],
+  "author": "ww24",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ww24/node-connect-sp/issues"
+  },
+  "homepage": "https://github.com/ww24/node-connect-sp"
+}
