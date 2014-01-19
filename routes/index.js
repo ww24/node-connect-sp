@@ -19,6 +19,10 @@ module.exports = function () {
     });
   });
 
+  app.get("/connect/:id/", function (req, res) {
+    res.redirect("../" + req.params.id);
+  });
+
   app.get("/connect/:id", function (req, res) {
     var id = req.params.id;
 
