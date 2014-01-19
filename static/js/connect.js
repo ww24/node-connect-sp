@@ -18,3 +18,9 @@ socket.on("connect", function () {
 socket.on("room_info", function (data) {
   console.log(data);
 });
+
+function beforeunload() {
+  return "別のページに移ると接続が切断されます。";
+}
+window.addEventListener("beforeunload", beforeunload);
+// window.removeEventListener("beforeunload", beforeunload);

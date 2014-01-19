@@ -1,0 +1,16 @@
+body {
+  /* modal fix */
+  margin: 0 !important;
+}
+
+.navbar-fixed-top {
+   /* modal fix */
+  margin: 0 !important; 
+}
+
+.url {
+  margin: 10px 0 0;
+}
+.url > input {
+  width: 100%;
+}

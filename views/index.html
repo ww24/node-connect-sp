@@ -4,23 +4,99 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/css/sticky-footer-navbar.css">
+  <link rel="stylesheet" href="/css/style.css">
   <title>Connect to Smartphone</title>
 </head>
 <body>
-  top page
-  <div id="qrcode"></div>
+  <div class="wrap">
+    <!-- fixed navbar -->
+    <header class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- menu -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Connect to Smartphone</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <a data-toggle="modal" href="#about-modal">About</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a data-toggle="modal" href="#disconnect-modal">
+                <span class="glyphicon glyphicon-off"></span>
+                Disconnect
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 text-center">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">スマートフォンで接続接続っ！</h3>
+            </div>
+            <div class="panel-body">
+              <div id="qrcode" class="img-thumbnail"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2>接続リスト</h2>
+      <div class="panel panel-default">
+        <table class="table table-hover" id="phones">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>端末</th>
+              <th>時間</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>iPhone 5s</td>
+              <td>21:13:52</td>
+              <td>
+                {{#connected}}
+                <button type="button" class="btn btn-success btn-xs">
+                  <span class="glyphicon glyphicon-ok-circle"></span> 接続済み
+                </button>
+                {{/connected}}
+                {{^connected}}
+                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#connect-modal">
+                  <span class="glyphicon glyphicon-warning-sign"></span> 接続待ち
+                </button>
+                {{/connected}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {{> modal}}
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/connect.js"></script>
   <script src="/js/qrcode.js"></script>
   <script src="/js/jquery.js"></script>
-  <script>
-    $(function () {
-      var $qrcode = $("#qrcode");
-      var qr = qrcode(10, "H");
-      qr.addData(location.href);
-      qr.make();
-      $qrcode.html(qr.createImgTag());
-    });
-  </script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/drawQR.js"></script>
+  <script src="/js/ui.js"></script>
 </body>
 </html>

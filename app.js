@@ -19,6 +19,9 @@ app.configure(function () {
   app.set("views", path.resolve(__dirname, "views"));
   app.set("view engine", "html");
   app.engine("html", hogan);
+  app.set("partials", {
+    modal: "partials/modal.html"
+  });
 
   // logger
   app.use(express.logger("dev"));
