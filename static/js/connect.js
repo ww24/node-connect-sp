@@ -3,24 +3,56 @@
  * client
  */
 
-var socket = io.connect();
+var realtime = (function () {
+  var socket = io.connect(),
+      method = {};
 
-socket.on("connect", function () {
-  socket.emit("heartbeat", {
-    connect_id: location.pathname.split("/").pop()
-  }, function (data) {
-    if (data.verify) {
-      socket.emit("room");
-    }
+  function activation() {
+    socket.emit("activate", {
+      connect_id: location.pathname.split("/").pop()
+    }, function (data) {
+      if (data.is_parent) {
+        connection_list.connected(true);
+      }
+    });
+  }
+
+  // connect event
+  socket.on("connect", activation);
+
+  socket.on("activatable", function (data) {
+    console.log(data.socket_id, socket.socket.sessionid);
+    if (data.socket_id === socket.socket.sessionid)
+      activation();
   });
-});
 
-socket.on("room_info", function (data) {
-  console.log(data);
-});
+  socket.on("room_info:add", function (data) {
+    connection_list.add(data.client);
+  });
+  socket.on("room_info:remove", function (data) {
+    connection_list.remove(data.client.socket_id);
+  });
+  socket.on("room_info:activate", function (data) {
+    connection_list.remove(data.client.socket_id);
+  });
 
-function beforeunload() {
-  return "別のページに移ると接続が切断されます。";
-}
-window.addEventListener("beforeunload", beforeunload);
-// window.removeEventListener("beforeunload", beforeunload);
+  // confirm disconnection
+  function beforeunload() {
+    return "別のページに移ると接続が切断されます。";
+  }
+  // window.addEventListener("beforeunload", beforeunload);
+  // window.removeEventListener("beforeunload", beforeunload);
+
+  // activate client
+  method.activate = function (socket_id, callback) {
+    var args = ["activate:client", {
+      socket_id: socket_id
+    }];
+
+    callback && args.push(callback);
+
+    socket.emit.apply(socket, args);
+  };
+
+  return method;
+})();

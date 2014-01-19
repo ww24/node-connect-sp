@@ -56,7 +56,11 @@
       </div>
       <h2>接続リスト</h2>
       <div class="panel panel-default">
-        <table class="table table-hover" id="phones">
+        <p data-bind="ifnot:connected" class="text-center">
+          <span class="glyphicon glyphicon-refresh"></span>
+          Connecting...
+        </p>
+        <table data-bind="if:connected" class="table table-hover" id="phones">
           <thead>
             <tr>
               <th>#</th>
@@ -65,22 +69,18 @@
               <th>状態</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-bind="foreach:connections">
             <tr>
               <td>1</td>
-              <td>iPhone 5s</td>
-              <td>21:13:52</td>
+              <td data-bind="text:name"></td>
+              <td data-bind="text:time"></td>
               <td>
-                {{#connected}}
-                <button type="button" class="btn btn-success btn-xs">
+                <button data-bind="visible:connected" type="button" class="btn btn-success btn-xs">
                   <span class="glyphicon glyphicon-ok-circle"></span> 接続済み
                 </button>
-                {{/connected}}
-                {{^connected}}
-                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#connect-modal">
+                <button data-bind="visible:!connected, click:active" type="button" class="btn btn-danger btn-xs" data-toggle="modal" href="#connect-modal">
                   <span class="glyphicon glyphicon-warning-sign"></span> 接続待ち
                 </button>
-                {{/connected}}
               </td>
             </tr>
           </tbody>
@@ -92,11 +92,14 @@
   {{> modal}}
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/connect.js"></script>
   <script src="/js/qrcode.js"></script>
+  <script src="/js/platform.js"></script>
   <script src="/js/jquery.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/knockout.js"></script>
+  <script src="/js/ConnectionListViewModel.js"></script>
   <script src="/js/drawQR.js"></script>
+  <script src="/js/connect.js"></script>
   <script src="/js/ui.js"></script>
 </body>
 </html>

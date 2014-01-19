@@ -1,16 +1,25 @@
+// modal button event
 $(function () {
-  $("#connect-modal form").submit(function (e) {
+  var $connect_modal = $("#connect-modal");
+  $connect_modal.find("form").submit(function (e) {
     e.preventDefault();
+    var $this = $(this);
 
-    $(this).find("button[type='submit']").button("loading");
+    var $button = $this.find("button[type='submit']");
+    $button.button("loading");
 
-    console.log($(this).serializeArray());
+    var socket_id = connection_list.active_element().socket_id;
+    realtime.activate(socket_id, function (data) {
+      $button.button("reset");
+      $connect_modal.modal("hide");
+    });
   });
 
   $("#disconnect-modal form").submit(function (e) {
     e.preventDefault();
 
-    $(this).find("button[type='submit']").button("loading");
+    var $button = $(this).find("button[type='submit']");
+    $button.button("loading");
 
     console.log($(this).serializeArray());
   });
