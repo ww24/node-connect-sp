@@ -19,14 +19,11 @@ var realtime = (function () {
 
   // connect event
   socket.on("connect", activation);
-
-  socket.on("activatable", function (data) {
-    console.log(data.socket_id, socket.socket.sessionid);
-    if (data.socket_id === socket.socket.sessionid)
-      activation();
-  });
+  // activatable event
+  socket.on("activatable", activation);
 
   socket.on("room_info:add", function (data) {
+    console.log(data.client);
     connection_list.add(data.client);
   });
   socket.on("room_info:remove", function (data) {
@@ -34,6 +31,12 @@ var realtime = (function () {
   });
   socket.on("room_info:activate", function (data) {
     connection_list.remove(data.client.socket_id);
+  });
+
+  socket.on("disconnect", function () {
+    connection_list
+      .remove()
+      .connected(false);
   });
 
   // confirm disconnection

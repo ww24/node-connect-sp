@@ -1,4 +1,5 @@
-function ConnectionElement(params, parent) {
+// element model
+function ConnectionElementModel(params, parent) {
   var that = this;
 
   this.parent = parent;
@@ -8,10 +9,13 @@ function ConnectionElement(params, parent) {
   });
 }
 
-ConnectionElement.prototype.active = function () {
+ConnectionElementModel.prototype.active = function () {
   this.parent.active_element(this);
+  
+  return this;
 };
 
+// list view model
 function ConnectionListViewModel() {
   this.connected = ko.observable(false);
   this.connections = ko.observableArray();
@@ -39,13 +43,21 @@ ConnectionListViewModel.prototype.add = function (client) {
 
   // add
   this.remove(client.socket_id);
-  this.connections.push(new ConnectionElement(connection, this));
+  this.connections.push(new ConnectionElementModel(connection, this));
+
+  return this;
 };
 
 ConnectionListViewModel.prototype.remove = function (socket_id) {
-  this.connections.remove(function (connection) {
-    return connection.socket_id === socket_id;
-  });
+  if (socket_id) {
+    this.connections.remove(function (connection) {
+      return connection.socket_id === socket_id;
+    });
+  } else {
+    this.connections.removeAll();
+  }
+
+  return this;
 };
 
 // view model bindings
