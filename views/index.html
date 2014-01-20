@@ -57,6 +57,9 @@
       <h2>
         <span data-bind="if:is_parent">接続リスト</span>
         <span data-bind="ifnot:is_parent">接続ステータス</span>
+        <!-- ko if:decidable -->
+        <button data-bind="click:decide" type="button" class="btn btn-success">確定</button>
+        <!-- /ko -->
       </h2>
       <div class="panel panel-default status">
         <p data-bind="ifnot:connected" class="text-center">

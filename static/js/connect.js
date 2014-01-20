@@ -22,7 +22,6 @@ var realtime = (function () {
   socket.on("activatable", activation);
 
   socket.on("room_info:add", function (data) {
-    console.log(data.client);
     connection_list.add(data.client);
   });
   socket.on("room_info:remove", function (data) {
@@ -32,7 +31,9 @@ var realtime = (function () {
     connection_list.remove(data.client.socket_id);
   });
 
+  // disconnect event
   socket.on("disconnect", function () {
+    // reset list
     connection_list
       .remove()
       .connected(false);

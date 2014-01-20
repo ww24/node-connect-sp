@@ -19,11 +19,18 @@ ConnectionElementModel.prototype.active = function () {
 function ConnectionListViewModel() {
   this.is_parent = ko.observable(false);
   this.connected = ko.observable(false);
+  this.connections = ko.observableArray();
+  this.active_element = ko.observable({});
+
   this.waiting = ko.computed(function () {
     return this.connected() && ! this.is_parent();
   }, this);
-  this.connections = ko.observableArray();
-  this.active_element = ko.observable({});
+  this.decidable = ko.computed(function () {
+    var active_connections = this.connections().filter(function (connection) {
+      return connection.connected;
+    });
+    return active_connections.length > 0;
+  }, this);
 }
 
 ConnectionListViewModel.padding = function (num) {
@@ -60,6 +67,12 @@ ConnectionListViewModel.prototype.remove = function (socket_id) {
   } else {
     this.connections.removeAll();
   }
+
+  return this;
+};
+
+ConnectionListViewModel.prototype.decide = function () {
+  
 
   return this;
 };
