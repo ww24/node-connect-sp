@@ -11,9 +11,8 @@ var realtime = (function () {
     socket.emit("activate", {
       connect_id: location.pathname.split("/").pop()
     }, function (data) {
-      if (data.is_parent) {
-        connection_list.connected(true);
-      }
+      connection_list.is_parent(data.is_parent);
+      connection_list.connected(data.connected);
     });
   }
 

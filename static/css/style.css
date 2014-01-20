@@ -14,3 +14,7 @@ body {
 .url > input {
   width: 100%;
 }
+
+.status p {
+  margin: 10px 0 10px; 
+}

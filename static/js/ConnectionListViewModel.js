@@ -11,13 +11,17 @@ function ConnectionElementModel(params, parent) {
 
 ConnectionElementModel.prototype.active = function () {
   this.parent.active_element(this);
-  
+
   return this;
 };
 
 // list view model
 function ConnectionListViewModel() {
+  this.is_parent = ko.observable(false);
   this.connected = ko.observable(false);
+  this.waiting = ko.computed(function () {
+    return this.connected() && ! this.is_parent();
+  }, this);
   this.connections = ko.observableArray();
   this.active_element = ko.observable({});
 }
