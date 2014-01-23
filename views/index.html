@@ -57,9 +57,7 @@
       <h2>
         <span data-bind="if:is_parent">接続リスト</span>
         <span data-bind="ifnot:is_parent">接続ステータス</span>
-        <!-- ko if:decidable -->
-        <button data-bind="click:decide" type="button" class="btn btn-success">確定</button>
-        <!-- /ko -->
+        <button data-bind="enable:decidable" id="decidable" type="button" class="btn btn-success" data-loading-text="Connecting...">確定</button>
       </h2>
       <div class="panel panel-default status">
         <p data-bind="ifnot:connected" class="text-center">
@@ -68,7 +66,7 @@
         </p>
         <p data-bind="if:waiting" class="text-center">
           <span class="glyphicon glyphicon-ok"></span>
-          Connected! Please waiting...
+          Connected! Please wait...
         </p>
         <table data-bind="if:is_parent" class="table table-hover" id="phones">
           <thead>

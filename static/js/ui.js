@@ -15,6 +15,7 @@ $(function () {
     });
   });
 
+  // 未実装
   $("#disconnect-modal form").submit(function (e) {
     e.preventDefault();
 
@@ -22,5 +23,10 @@ $(function () {
     $button.button("loading");
 
     console.log($(this).serializeArray());
+  });
+
+  $("#decidable").click(function () {
+    $(this).button("loading");
+    realtime.connect();
   });
 });

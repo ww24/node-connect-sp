@@ -14,10 +14,16 @@ module.exports = function () {
 
   // generate id
   app.get("/connect", function (req, res) {
+    var redirect_url = req.query.redirect;
+
+    if (! redirect_url)
+      return res.send(400, "redirect params is required");
+
     libs.generateID(function (id, done) {
       done(!~ ids.indexOf(id));
     }, function (connect_id) {
       req.session.connect_id = connect_id;
+      req.session.redirect_url = req.query.redirect;
       res.redirect("./" + connect_id);
     });
   });
@@ -39,6 +45,15 @@ module.exports = function () {
         return res.send(400);
 
     res.render("index");
+  });
+
+  app.get("/redirect", function (req, res) {
+    var redirect_url = req.query.redirect;
+
+    if (! redirect_url)
+      return res.send(400);
+
+    res.redirect(redirect_url);
   });
 
   // id activation
@@ -64,9 +79,6 @@ module.exports = function () {
         // activate
         req.io.join(connect_id);
         client.connected = true;
-
-        console.log("clients: " + room_clients);
-        console.log("parent: " + is_parent);
       }
 
       req.io.socket.set("client", client, function (err) {
@@ -98,6 +110,22 @@ module.exports = function () {
     activatable_socket_ids.push(req.data.socket_id);
     app.io.sockets.socket(req.data.socket_id).emit("activatable");
     req.io.respond();
+  });
+
+  app.io.route("decide", function (req) {
+    var redirect_url = req.session.redirect_url;
+
+    if (! redirect_url)
+      console.error("redirect_url is undefined");
+
+    req.io.socket.get("client", function (err, client) {
+      if (err)
+        return console.error(err);
+
+      app.io.room(client.connect_id).broadcast("redirect", {
+        url: "../redirect?redirect=" + redirect_url
+      });
+    });
   });
 
   app.io.route("room", function (req) {

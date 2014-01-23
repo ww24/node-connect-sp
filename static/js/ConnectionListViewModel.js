@@ -71,12 +71,6 @@ ConnectionListViewModel.prototype.remove = function (socket_id) {
   return this;
 };
 
-ConnectionListViewModel.prototype.decide = function () {
-  
-
-  return this;
-};
-
 // view model bindings
 var connection_list = new ConnectionListViewModel();
 ko.applyBindings(connection_list);

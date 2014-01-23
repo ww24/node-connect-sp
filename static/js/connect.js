@@ -31,6 +31,17 @@ var realtime = (function () {
     connection_list.remove(data.client.socket_id);
   });
 
+  // confirm disconnection
+  function beforeunload() {
+    return "別のページに移ると接続が切断されます。";
+  }
+  window.addEventListener("beforeunload", beforeunload);
+
+  socket.on("redirect", function (data) {
+    window.removeEventListener("beforeunload", beforeunload);
+    location.replace(data.url);
+  });
+
   // disconnect event
   socket.on("disconnect", function () {
     // reset list
@@ -38,13 +49,6 @@ var realtime = (function () {
       .remove()
       .connected(false);
   });
-
-  // confirm disconnection
-  function beforeunload() {
-    return "別のページに移ると接続が切断されます。";
-  }
-  // window.addEventListener("beforeunload", beforeunload);
-  // window.removeEventListener("beforeunload", beforeunload);
 
   // activate client
   method.activate = function (socket_id, callback) {
@@ -55,6 +59,10 @@ var realtime = (function () {
     callback && args.push(callback);
 
     socket.emit.apply(socket, args);
+  };
+
+  method.connect = function () {
+    socket.emit("decide");
   };
 
   return method;
