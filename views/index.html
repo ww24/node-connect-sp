@@ -46,7 +46,7 @@
         <div class="col-sm-4 col-sm-offset-4 text-center">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">スマートフォンで接続接続っ！</h3>
+              <h3 class="panel-title">①PC/スマートフォンで接続！</h3>
             </div>
             <div class="panel-body">
               <div id="qrcode" class="img-thumbnail"></div>
@@ -57,7 +57,11 @@
       <h2>
         <span data-bind="if:is_parent">接続リスト</span>
         <span data-bind="ifnot:is_parent">接続ステータス</span>
-        <button data-bind="enable:decidable" id="decidable" type="button" class="btn btn-success" data-loading-text="Connecting...">確定</button>
+        <button data-bind="visible:is_parent, enable:decidable" id="decidable" type="button" class="btn btn-success" data-loading-text="Connecting...">確定</button>
+        <!-- ko if: is_parent() && connections().length > 0 -->
+        <span data-bind="visible:!decidable()" class="text-primary">↓ ②接続したいデバイスの<code>状態</code>をクリック！</span>
+        <span data-bind="visible:decidable" class="text-primary">← ③接続が済んだら<code>確定</code>をクリック！</span>
+        <!-- /ko -->
       </h2>
       <div class="panel panel-default status">
         <p data-bind="ifnot:connected" class="text-center">
