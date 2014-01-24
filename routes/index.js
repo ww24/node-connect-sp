@@ -190,7 +190,7 @@ module.exports = function () {
         };
         // save player data
         req.io.socket.set("player", player, function () {
-          req.io.room(room_id).broadcast("room:player", player);
+          req.io.room(room_id).broadcast("room:player:add", player);
           player.status = "ok";
           req.io.respond(player);
         });
@@ -243,8 +243,13 @@ module.exports = function () {
           if (err)
             return console.error(err);
 
-          // cleanup
-          player && req.session.destroy();
+          if (player) {
+            // broadcast client info
+            req.io.room(player.room_id).broadcast("room:player:remove", player);
+
+            // cleanup
+            req.session.destroy();
+          }
         });
       }
     });
