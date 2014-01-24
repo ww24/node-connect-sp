@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>example page</title>
+</head>
+<body>
+  <div class="container">
+    <div data-bind="ifnot: connected">
+      <h2>丸を動かすだけのデモ</h2>
+      <p class="lead">下の Play ボタンを押して、スマホ接続ページに飛んで下さい。</p>
+      <button data-bind="click: play" type="button" class="btn btn-primary btn-lg">Play!</button>
+    </div>
+    <div data-bind="if: connected">
+      <div data-bind="visible: parent">
+        <h2>Movable Circle</h2>
+        <div data-bind="style: {left: (circle_x() + 'px'), top: (circle_y() + 'px')}" class="circle"></div>
+      </div>
+      <div data-bind="visible: ! parent()">
+        <h2>Controller</h2>
+        <button data-bind="click: left" type="button" class="btn btn-success btn-lg">←</button>
+        <button data-bind="click: right" type="button" class="btn btn-success btn-lg">→</button>
+      </div>
+      <div class="alert alert-info info-foot">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Info:</strong>
+        終了する時は、ブラウザを閉じるかリロードして下さい。セッションが破棄されます。
+
+      </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/knockout.js"></script>
+  <script src="GameViewModel.js"></script>
+  <script src="connect.js"></script>
+</body>
+</html>
