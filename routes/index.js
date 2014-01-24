@@ -148,7 +148,7 @@ module.exports = function () {
   // get client info
   app.io.route("client", function (req) {
     var room_id = req.session.room_id,
-        is_parent = !! req.session[room_id];
+        is_parent = req.session[room_id] && req.session[room_id] === "true";
 
     req.io.socket.get("player", function (err, player) {
       if (err)
