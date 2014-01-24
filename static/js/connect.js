@@ -37,9 +37,14 @@ var realtime = (function () {
   }
   window.addEventListener("beforeunload", beforeunload);
 
-  socket.on("redirect", function (data) {
+  // redirect
+  function redirect(url) {
     window.removeEventListener("beforeunload", beforeunload);
-    location.replace(data.url);
+    location.replace(url);
+  }
+
+  socket.on("redirect", function (data) {
+    redirect(data.url);
   });
 
   // disconnect event
@@ -62,7 +67,9 @@ var realtime = (function () {
   };
 
   method.connect = function () {
-    socket.emit("decide");
+    socket.emit("decide", function (data) {
+      redirect(data.url);
+    });
   };
 
   return method;
