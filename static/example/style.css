@@ -20,3 +20,12 @@
 body.visible *[data-bind^="visible"], body.visible *[data-bind^="if"] {
   visibility: visible;
 }
+
+.ribbon {
+  display: none;
+}
+@media (min-width: 600px) {
+  .ribbon {
+    display: block;
+  } 
+}
