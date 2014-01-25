@@ -4,6 +4,8 @@
   ko.applyBindings(game_view);
 
   function init(client) {
+    // for Knockout.js
+    $("body").addClass("visible");
     // status が ng の時は認証失敗
     if (client.status === "ng")
       return console.error("status: ng");

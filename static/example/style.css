@@ -12,3 +12,11 @@
 .info-foot {
   margin-top: 100px;
 }
+
+/* for knockout.js */
+*[data-bind^="visible"], *[data-bind^="if"] {
+  visibility: hidden;
+}
+body.visible *[data-bind^="visible"], body.visible *[data-bind^="if"] {
+  visibility: visible;
+}
