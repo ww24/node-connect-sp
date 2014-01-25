@@ -3,7 +3,8 @@
  *
  */
 
-var libs = require("../libs");
+var libs = require("../libs"),
+    url = require("url");
 
 // 後に DB で置き換える
 var ids = [],
@@ -24,6 +25,7 @@ module.exports = function () {
     }, function (connect_id) {
       req.session.connect_id = connect_id;
       req.session.redirect_url = req.query.redirect;
+      req.query.room_param && (req.session.room_param = req.query.room_param);
       res.redirect("./" + connect_id);
     });
   });
@@ -55,6 +57,14 @@ module.exports = function () {
 
     if (! redirect_url || ! activated)
       return res.send(400);
+
+
+    if (req.session.room_param) {
+      redirect_url = url.parse(redirect_url);
+      redirect_url.query || (redirect_url.query = {});
+      redirect_url.query[req.session.room_param] = connect_id;
+      redirect_url = url.format(redirect_url);
+    }
 
     req.session.room_id = connect_id;
     is_parent && (req.session[connect_id] = is_parent);
@@ -128,17 +138,17 @@ module.exports = function () {
       if (err)
         return console.error(err);
 
-      var url = "../redirect/" + client.connect_id + "?redirect=" + redirect_url;
+      var r_url = "../redirect/" + client.connect_id + "?redirect=" + redirect_url;
 
       setTimeout(function () {
         // broadcast (for children)
         req.io.room(client.connect_id).broadcast("redirect", {
-          url: url + "&is_parent=false"
+          url: r_url + "&is_parent=false"
         });
       }, 500);
       // for parent
       req.io.respond({
-        url: url + "&is_parent=true"
+        url: r_url + "&is_parent=true"
       });
     });
   });

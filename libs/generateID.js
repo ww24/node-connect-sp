@@ -7,7 +7,7 @@
 
 var crypto = require("crypto");
 
-var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+",
+var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_",
     charLength = chars.length;
 
 function encoder(buf) {
