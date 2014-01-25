@@ -13,7 +13,8 @@ var fs = require("fs"),
  * @param {String} dir ディレクトリパス
  */
 module.exports = function (dir) {
-  var args = [].slice.call(arguments, 1),
+  var that = this,
+      args = [].slice.call(arguments, 1),
       modules = fs.readdirSync(dir),
       mod = {};
 
@@ -24,7 +25,7 @@ module.exports = function (dir) {
     var name = module.slice(0, -3),
         func = require(path.resolve(path.join(dir, name)));
 
-    mod[name] = args.length > 0 ? func.apply(this, args) : func;
+    mod[name] = args.length > 0 ? func.apply(that, args) : func;
   });
 
   return mod;
