@@ -13,7 +13,18 @@ var ids = [],
 module.exports = function () {
   var app = this;
 
-  // generate id
+  /**
+   * @api {get} /connect request connection
+   * @apiGroup Connect
+   * @apiName RequestConnection
+   * @apiDescription スマートフォン接続のためにこの URL へリダイレクトさせます。
+   * @apiVersion 0.0.1
+   *
+   * @apiParamTitle (All) Query String
+   * @apiParam (All) {String} redirect リダイレクト URL
+   * @apiParam (All) {String} [room_param] redirect リダイレクト時に room_id を渡す param 名
+   *
+   */
   app.get("/connect", function (req, res) {
     var redirect_url = req.query.redirect;
 

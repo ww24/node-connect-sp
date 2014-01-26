@@ -1,7 +1,7 @@
 {
   "name": "node-connect-sp",
   "version": "0.0.1",
-  "description": "connect to smartphone",
+  "description": "Connect to Smartphone",
   "main": "app.js",
   "dependencies": {
     "express.io": "~1.1.13",
@@ -23,5 +23,6 @@
   "bugs": {
     "url": "https://github.com/ww24/node-connect-sp/issues"
   },
-  "homepage": "https://github.com/ww24/node-connect-sp"
+  "homepage": "https://github.com/ww24/node-connect-sp",
+  "apidocFilename": "API.md"
 }

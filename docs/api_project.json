@@ -1,0 +1,10 @@
+{
+  "name": "node-connect-sp",
+  "version": "0.0.1",
+  "description": "Connect to Smartphone",
+  "apidoc": "<h1 id=\"api-documentation\">API Documentation</h1>\n<h2 id=\"license\">License</h2>\n<p>MIT</p>\n",
+  "generator": {
+    "version": "0.3.0",
+    "time": "2014-01-26T15:43:46.425Z"
+  }
+}

@@ -34,6 +34,20 @@ module.exports = function () {
 
           if (player) {
             // broadcast client info
+            /**
+             * @api {socket.io} socket.on("room:player:remove") receive player data
+             * @apiGroup Room
+             * @apiName RoomPlayerRemove
+             * @apiDescription Player 情報の受信 (退室イベント)
+             * @apiVersion 0.0.1
+             *
+             * @apiExample Example
+             * socket.on("room:player:remove", function (player) {
+             *   // Player の情報を取得
+             *   console.log(player);
+             * });
+             *
+             */
             req.io.room(player.room_id).broadcast("room:player:remove", player);
 
             // cleanup

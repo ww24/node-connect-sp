@@ -9,7 +9,26 @@ var room_data = {};
 module.exports = function () {
   var app = this;
 
-  // get client info
+  /**
+   * @api {socket.io} socket.emit("client") get client information
+   * @apiGroup Room
+   * @apiName Client
+   * @apiDescription 接続確認とクライアント情報の取得
+   * @apiVersion 0.0.1
+   * 
+   * @apiSuccessTitle (All) StatusObject
+   * @apiSuccess (All) {String} status [ok/ng] 接続後/接続前
+   * @apiSuccess (All) {String} room_id ルーム固有の ID
+   * @apiSuccess (All) {Boolean} is_parent 親機判定
+   * @apiSuccess (All) {String} socket_id Socket.IO の ID
+   *
+   * @apiExample Example
+   * socket.emit("client", function (client) {
+   *   // 自分の情報を取得
+   *   console.log(client);
+   * });
+   *
+   */
   app.io.route("client", function (req) {
     var room_id = req.session.room_id,
         is_parent = req.session[room_id] && req.session[room_id] === "true";
@@ -54,6 +73,20 @@ module.exports = function () {
         };
         // save player data
         req.io.socket.set("player", player, function () {
+          /**
+           * @api {socket.io} socket.on("room:player:add") receive player data
+           * @apiGroup Room
+           * @apiName RoomPlayerAdd
+           * @apiDescription Player 情報の受信 (入室イベント)
+           * @apiVersion 0.0.1
+           *
+           * @apiExample Example
+           * socket.on("room:player:add", function (player) {
+           *   // Player の情報を取得
+           *   console.log(player);
+           * });
+           *
+           */
           req.io.room(room_id).broadcast("room:player:add", player);
           player.status = "ok";
           req.io.respond(player);
@@ -62,7 +95,14 @@ module.exports = function () {
     });
   });
 
-  // sync data (in room)
+  /**
+   * @api {socket.io} socket.emit("data") send sync data
+   * @apiGroup Room
+   * @apiName Data
+   * @apiDescription 汎用データの送信 (書式は任意)
+   * @apiVersion 0.0.1
+   *
+   */
   app.io.route("data", function (req) {
     var room_id = Object.keys(app.io.roomClients[req.io.socket.id]).pop().slice(1);
 
@@ -79,6 +119,14 @@ module.exports = function () {
       var data = req.data;
       data.socket_id = req.io.socket.id;
 
+      /**
+       * @api {socket.io} socket.on("room:data") receive sync data
+       * @apiGroup Room
+       * @apiName RoomData
+       * @apiDescription 汎用データの受信 (書式は任意)
+       * @apiVersion 0.0.1
+       *
+       */
       req.io.room(room_id).broadcast("room:data", data);
       req.io.respond({
         status: "ok"
