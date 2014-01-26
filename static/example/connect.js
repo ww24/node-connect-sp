@@ -1,11 +1,10 @@
 (function () {
   // view model bindings
   var game_view = new GameViewModel();
-  ko.applyBindings(game_view);
 
   function init(client) {
-    // for Knockout.js
-    $("body").addClass("visible");
+    // apply view
+    ko.applyBindings(game_view);
     // status が ng の時は認証失敗
     if (client.status === "ng")
       return console.error("status: ng");

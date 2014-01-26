@@ -13,7 +13,10 @@
   <a class="ribbon" href="https://github.com/ww24/node-connect-sp">
     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
   </a>
-  <div class="container">
+  <div class="container" data-bind="visible: false">
+    <p>Loading...</p>
+  </div>
+  <div class="container" data-bind="visible: true" style="display: none">
     <div data-bind="ifnot: connected">
       <h2>丸を動かすだけのデモ</h2>
       <p class="lead">下の Play ボタンを押して、スマホ接続ページに飛んで下さい。</p>

@@ -74,4 +74,3 @@ ConnectionListViewModel.prototype.remove = function (socket_id) {
 // view model bindings
 var connection_list = new ConnectionListViewModel();
 ko.applyBindings(connection_list);
-document.body.className += "visible";

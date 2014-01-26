@@ -18,11 +18,3 @@ body {
 .status p {
   margin: 10px 0 10px; 
 }
-
-/* for knockout.js */
-*[data-bind^="visible"], *[data-bind^="if"] {
-  visibility: hidden;
-}
-body.visible *[data-bind^="visible"], body.visible *[data-bind^="if"] {
-  visibility: visible;
-}
