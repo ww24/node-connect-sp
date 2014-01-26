@@ -58,11 +58,11 @@ module.exports = function () {
     if (! redirect_url || ! activated)
       return res.send(400);
 
-
     if (req.session.room_param) {
-      redirect_url = url.parse(redirect_url);
+      redirect_url = url.parse(redirect_url, true);
       redirect_url.query || (redirect_url.query = {});
       redirect_url.query[req.session.room_param] = connect_id;
+      redirect_url.search = null;
       redirect_url = url.format(redirect_url);
     }
 
@@ -138,7 +138,7 @@ module.exports = function () {
       if (err)
         return console.error(err);
 
-      var r_url = "../redirect/" + client.connect_id + "?redirect=" + redirect_url;
+      var r_url = "../redirect/" + client.connect_id + "?redirect=" + encodeURIComponent(redirect_url);
 
       setTimeout(function () {
         // broadcast (for children)
