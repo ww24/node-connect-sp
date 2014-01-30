@@ -30,6 +30,11 @@
    * io.connect("http://connect-sp-server/");
    */
   var socket = io.connect();
+  socket.on("error", function (err) {
+    console.error(err);
+    // 認証前処理
+    init({status: "ng"});
+  });
   socket.on("connect", function () {
     // 接続確認
     socket.emit("client", function (client) {
