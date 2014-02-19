@@ -1,3 +1,4 @@
+/* global qrcode */
 $(function () {
   var $qrcode = $("#qrcode");
   var qr = qrcode(10, "H");

@@ -1,3 +1,4 @@
+/* global io, connection_list */
 /**
  * node-connect-sp
  * client
@@ -37,14 +38,27 @@ var realtime = (function () {
   }
   window.addEventListener("beforeunload", beforeunload);
 
-  // redirect
   function redirect(url) {
     window.removeEventListener("beforeunload", beforeunload);
     location.replace(url);
   }
 
+  function close() {
+    window.removeEventListener("beforeunload", beforeunload);
+    window.close();
+  }
+
+  function back() {
+    window.removeEventListener("beforeunload", beforeunload);
+    history.back() || window.close();
+  }
+
   socket.on("redirect", function (data) {
     redirect(data.url);
+  });
+
+  socket.on("close", function () {
+    close();
   });
 
   // disconnect event
@@ -72,5 +86,16 @@ var realtime = (function () {
     });
   };
 
+  method.disconnect = function (is_parent, callback) {
+    if (is_parent) {
+      socket.emit("close", function () {
+        back();
+      });
+    } else {
+      close();
+    }
+  };
+
   return method;
 })();
+realtime;

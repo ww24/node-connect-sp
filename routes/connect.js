@@ -163,4 +163,14 @@ module.exports = function () {
       });
     });
   });
+
+  app.io.route("close", function (req) {
+    req.io.socket.get("client", function (err, client) {
+      if (err)
+        return console.error(err);
+
+      req.io.room(client.connect_id).broadcast("close");
+      req.io.respond();
+    });
+  });
 };

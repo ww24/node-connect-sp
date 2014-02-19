@@ -1,7 +1,7 @@
 <!-- connect modal -->
 <div id="connect-modal" class="modal fade" tabindex="-1" role="dialog" aria-labbeldby="deletePhone" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" role="form">
+    <form data-bind="submit:connect" class="modal-content" role="form">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">
@@ -22,7 +22,7 @@
 <!-- disconnect modal -->
 <div id="disconnect-modal" class="modal fade" tabindex="-1" role="dialog" aria-labbeldby="deletePhone" aria-hidden="true">
   <div class="modal-dialog">
-    <form class="modal-content" role="form">
+    <form data-bind="submit:disconnect" class="modal-content" role="form">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">

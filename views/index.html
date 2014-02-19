@@ -60,7 +60,7 @@
       <h2>
         <span data-bind="if:is_parent">接続リスト</span>
         <span data-bind="ifnot:is_parent">接続ステータス</span>
-        <button data-bind="visible:is_parent, enable:decidable" id="decidable" type="button" class="btn btn-success" data-loading-text="Connecting...">確定</button>
+        <button data-bind="visible:is_parent, enable:decidable, click:decide" type="button" class="btn btn-success" data-loading-text="Connecting...">確定</button>
         <!-- ko if: is_parent() && connections().length > 0 -->
         <span data-bind="visible:!decidable()" class="text-primary">↓ ②接続したいデバイスの<code>状態</code>をクリック！</span>
         <span data-bind="visible:decidable" class="text-primary">← ③接続が済んだら<code>確定</code>をクリック！</span>
@@ -111,8 +111,7 @@
   <script src="/js/bootstrap.js"></script>
   <script src="/js/knockout.js"></script>
   <script src="/js/ConnectionListViewModel.js"></script>
-  <script src="/js/drawQR.js"></script>
   <script src="/js/connect.js"></script>
-  <script src="/js/ui.js"></script>
+  <script src="/js/drawQR.js"></script>
 </body>
 </html>

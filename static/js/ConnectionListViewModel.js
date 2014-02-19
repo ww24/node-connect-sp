@@ -1,3 +1,4 @@
+/* global ko, platform, realtime */
 // element model
 function ConnectionElementModel(params, parent) {
   var that = this;
@@ -69,6 +70,34 @@ ConnectionListViewModel.prototype.remove = function (socket_id) {
   }
 
   return this;
+};
+
+ConnectionListViewModel.prototype.connect = function (elem) {
+  var $form = $(elem),
+      $modal = $form.parent().parent();
+
+  var $button = $form.find("button[type='submit']");
+  $button.button("loading");
+
+  var socket_id = this.active_element().socket_id;
+  realtime.activate(socket_id, function () {
+    $button.button("reset");
+    $modal.modal("hide");
+  });
+};
+
+ConnectionListViewModel.prototype.disconnect = function (elem) {
+  var $form = $(elem);
+
+  var $button = $form.find("button[type='submit']");
+  $button.button("loading");
+
+  realtime.disconnect(this.is_parent());
+};
+
+ConnectionListViewModel.prototype.decide = function (elem) {
+  $(elem).button("loading");
+  realtime.connect();
 };
 
 // view model bindings
