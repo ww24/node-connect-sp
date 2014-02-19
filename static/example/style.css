@@ -1,6 +1,7 @@
 body {
   -webkit-user-select: none;
   user-select: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 .circle {
