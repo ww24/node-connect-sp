@@ -1,3 +1,4 @@
+/* global GameViewModel, io, ko */
 (function () {
   // view model bindings
   var game_view = new GameViewModel();
@@ -41,10 +42,23 @@
       // 自分の情報を取得
       console.log(client);
       init(client);
+
+      if (client.is_parent) {
+        // for The Nagle Algorithm problem
+        // http://www.html5rocks.com/ja/tutorials/casestudies/world_wide_maze/
+        setInterval(function () {
+          socket.emit("data", {
+            type: "dummy"
+          });
+        }, 50);
+      }
     });
   });
   // 任意のデータを受け取る
   socket.on("room:data", function (data) {
+    if (data.type === "dummy")
+      return;
+
     console.log("room:data");
     console.log(data);
 
