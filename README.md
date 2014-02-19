@@ -13,7 +13,7 @@ node-connect-sp
 
 API Document
 ---------------
-[here](docs/index.html)
+[here](http://connect-sp.ww24.jp/docs/)
 
 License
 ---------------
